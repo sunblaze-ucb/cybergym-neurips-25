@@ -13,6 +13,12 @@ Download the benchmark data
 TODO
 ```
 
+### Agents
+For different agents, please follow the instructions in the separate folders
+- [Cybench](scripts/agents/cybench/README.md)
+- [ENiGMA](scripts/agents/enigma/README.md)
+- [Codex](scripts/agents/codex/README.md)
+- [OpenHands](scripts/agents/openhands/README.md)
 
 ## Evaluation
 Start the PoC submission server:
