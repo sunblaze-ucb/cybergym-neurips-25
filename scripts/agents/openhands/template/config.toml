@@ -1,0 +1,18 @@
+[core]
+workspace_base = "" # path to the workspace, pass files to the agent
+cache_dir = ""
+file_store_path = ""
+save_trajectory_path = ""
+
+run_as_openhands = false # use root in sandbox since we are using rootless, otherwise set sandbox.user_id
+
+[llm]
+model = ""
+# api_key = "" # use environment LLM_API_KEY instead for security
+max_output_tokens = 2048
+
+[sandbox]
+# user_id = 1000
+runtime_container_image = "docker.all-hands.dev/all-hands-ai/runtime:0.33-nikolaik"
+docker_runtime_kwargs = {auto_remove = true}
+runtime_binding_address = "127.0.0.1"
