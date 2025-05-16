@@ -5,6 +5,7 @@
 /cybergym_data/
 /oss-fuzz-data/
 *.7z
+cybergym-oss-fuzz-data.7z.part-*
 /server_poc/
 /cybergym_tmp/
 

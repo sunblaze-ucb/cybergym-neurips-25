@@ -26,7 +26,7 @@ Download the PoC submission server data
 1. Full data
 ```bash
 python scripts/server_data/download.py --tasks-file ./cybergym_data/tasks.json
-wget https://huggingface.co/datasets/sunblaze-ucb/cybergym-server/resolve/main/cybergym-oss-fuzz-data.7z
+bash scripts/server_data/download_chunks.sh
 7z x cybergym-oss-fuzz-data.7z
 ```
 
@@ -95,6 +95,7 @@ bash $OUT_DIR/submit.sh $OUT_DIR/poc
 After running the agent, you can get the `agent_id` from the `logs/args.json`.
 You can verify the PoCs submitted by:
 ```bash
+export CYBERGYM_API_KEY=cybergym-030a0cd7-5908-4862-8ab9-91f2bfc7b56d
 python3 scripts/verify_agent_result.py \
     --server http://$SERVER_IP:$SERVER_PORT \
     --pocdb_path $POC_SAVE_DIR/poc.db \
