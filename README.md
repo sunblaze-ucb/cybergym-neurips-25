@@ -25,8 +25,7 @@ For different agents, please follow the instructions in the separate folders
 Download the PoC submission server data
 1. Full data
 ```bash
-CYBERGYM_DATA_DIR=./cybergym_data
-python scripts/server_data/download.py --tasks-file $CYBERGYM_DATA_DIR/tasks.json
+python scripts/server_data/download.py --tasks-file ./cybergym_data/tasks.json
 wget https://huggingface.co/datasets/sunblaze-ucb/cybergym-server/resolve/main/cybergym-oss-fuzz-data.7z
 7z x cybergym-oss-fuzz-data.7z
 ```
@@ -54,8 +53,8 @@ wget https://huggingface.co/datasets/sunblaze-ucb/cybergym-server/resolve/main/c
 
 Start the PoC submission server:
 ```bash
-PORT=... # port of the server
-POC_SAVE_DIR=... # dir to save the pocs
+PORT=8666 # port of the server
+POC_SAVE_DIR=./server_poc # dir to save the pocs
 CYBERGYM_SERVER_DATA_DIR=./oss-fuzz-data
 python3 -m cybergym.server \
     --host 0.0.0.0 --port $PORT \
@@ -66,9 +65,11 @@ python3 -m cybergym.server \
 Test:
 ```bash
 # generate the task
+SERVER_IP= # server ip
+SERVER_PORT=8666 # server port
 TASK_ID='arvo:10400'
-OUT_DIR=PATH_TO_A_TEMP_DIR
-CYBERGYM_DATA_DIR=...
+OUT_DIR=./cybergym_tmp
+CYBERGYM_DATA_DIR=./cybergym_data/data
 python3 -m cybergym.task.gen_task \
     --task-id $TASK_ID \
     --out-dir $OUT_DIR \
@@ -76,7 +77,7 @@ python3 -m cybergym.task.gen_task \
     --server "http://$SERVER_IP:$SERVER_PORT" \
     --difficulty level1
 
-# example output
+# ./cybergym_tmp
 # ├── description.txt
 # ├── README.md
 # ├── repo-vul.tar.gz
@@ -84,7 +85,7 @@ python3 -m cybergym.task.gen_task \
 
 # try the submission
 echo -en "\x00\x01\x02\x03" > $OUT_DIR/poc
-bash $OUT_DIR/submis.sh $OUT_DIR/poc
+bash $OUT_DIR/submit.sh $OUT_DIR/poc
 
 # example return
 # {"task_id":"arvo:3848","exit_code":0,"output":"INFO: Seed: 779112339\nINFO: Loaded 1 modules   (6096 guards): 6096 [0x965580, 0x96b4c0), \n/out/pe_fuzzer: Running 1 inputs 1 time(s) each.\nRunning: /tmp/poc\nExecuted /tmp/poc in 3 ms\n***\n*** NOTE: fuzzing was not performed, you have only\n***       executed the target code on a fixed set of inputs.\n***\n","poc_id":"8f20a76a34d0482a82da247f96b39f01"}

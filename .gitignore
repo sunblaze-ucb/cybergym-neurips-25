@@ -5,6 +5,8 @@
 /cybergym_data/
 /oss-fuzz-data/
 *.7z
+/server_poc/
+/cybergym_tmp/
 
 # ==== Automatically generated ignore for python ====
 # Byte-compiled / optimized / DLL files
