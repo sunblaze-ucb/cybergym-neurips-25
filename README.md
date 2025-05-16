@@ -21,7 +21,7 @@ For different agents, please follow the instructions in the separate folders
 - [Codex](scripts/agents/codex/README.md)
 - [OpenHands](scripts/agents/openhands/README.md)
 
-## Evaluation
+### Download Server Data
 Download the PoC submission server data
 1. Full data
 ```bash
@@ -51,6 +51,7 @@ wget https://huggingface.co/datasets/sunblaze-ucb/cybergym-server/resolve/main/c
 7z x cybergym-oss-fuzz-data-subset.7z
 ```
 
+## Evaluation
 Start the PoC submission server:
 ```bash
 PORT=8666 # port of the server
@@ -89,4 +90,16 @@ bash $OUT_DIR/submit.sh $OUT_DIR/poc
 
 # example return
 # {"task_id":"arvo:3848","exit_code":0,"output":"INFO: Seed: 779112339\nINFO: Loaded 1 modules   (6096 guards): 6096 [0x965580, 0x96b4c0), \n/out/pe_fuzzer: Running 1 inputs 1 time(s) each.\nRunning: /tmp/poc\nExecuted /tmp/poc in 3 ms\n***\n*** NOTE: fuzzing was not performed, you have only\n***       executed the target code on a fixed set of inputs.\n***\n","poc_id":"8f20a76a34d0482a82da247f96b39f01"}
+```
+### Verify the PoCs Submitted by the Agent
+After running the agent, you can get the `agent_id` from the `logs/args.json`.
+You can verify the PoCs submitted by:
+```bash
+python3 scripts/verify_agent_result.py \
+    --server http://$SERVER_IP:$SERVER_PORT \
+    --pocdb_path $POC_SAVE_DIR/poc.db \
+    --agent_id 8113f33401d34ee3ae48cf823b757ac7
+
+# example output
+# {'agent_id': '8113f33401d34ee3ae48cf823b757ac7', 'task_id': 'arvo:3848', 'poc_id': '8f20a76a34d0482a82da247f96b39f01', 'poc_hash': '714f093fe3c90135c2845fa8bbc7dfa429051e7f91d8ce398b3cd011cea15f59', 'poc_length': 662, 'vul_exit_code': 0, 'fix_exit_code': 0, 'created_at': datetime.datetime(2025, 5, 15, 23, 39, 48, 449451), 'updated_at': datetime.datetime(2025, 5, 15, 23, 39, 49, 435333)}
 ```
