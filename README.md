@@ -10,7 +10,8 @@ pip3 install -e '.[dev,server]'
 
 Download the benchmark data
 ```bash
-TODO
+git lfs install
+git clone https://huggingface.co/datasets/sunblaze-ucb/cybergym cybergym_data
 ```
 
 ### Agents
@@ -21,6 +22,11 @@ For different agents, please follow the instructions in the separate folders
 - [OpenHands](scripts/agents/openhands/README.md)
 
 ## Evaluation
+Download the PoC submission server data
+```bash
+
+```
+
 Start the PoC submission server:
 ```bash
 PORT=... # port of the server

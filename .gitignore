@@ -2,6 +2,8 @@
 /out/
 .vscode/
 /logs/
+/cybergym_data/
+/cybergym_server_data/
 
 # ==== Automatically generated ignore for python ====
 # Byte-compiled / optimized / DLL files
