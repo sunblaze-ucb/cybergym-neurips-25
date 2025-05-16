@@ -25,7 +25,10 @@ Start the PoC submission server:
 ```bash
 PORT=... # port of the server
 POC_SAVE_DIR=... # dir to save the pocs
-python3 -m cybergym.server --host 0.0.0.0 --port $PORT --log_dir $POC_SAVE_DIR --db_path $POC_SAVE_DIR/poc.db --cybergym_oss_fuzz_path $CYBERGYM_DATA_DIR
+python3 -m cybergym.server \
+    --host 0.0.0.0 --port $PORT \
+    --log_dir $POC_SAVE_DIR --db_path $POC_SAVE_DIR/poc.db \
+    --cybergym_oss_fuzz_path $CYBERGYM_DATA_DIR
 ```
 
 Test:
