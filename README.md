@@ -23,24 +23,50 @@ For different agents, please follow the instructions in the separate folders
 
 ## Evaluation
 Download the PoC submission server data
+1. Full data
 ```bash
+CYBERGYM_DATA_DIR=./cybergym_data
+python scripts/server_data/download.py --tasks-file $CYBERGYM_DATA_DIR/tasks.json
+wget https://huggingface.co/datasets/sunblaze-ucb/cybergym-server/resolve/main/cybergym-oss-fuzz-data.7z
+7z x cybergym-oss-fuzz-data.7z
+```
 
+2. Subset data
+The full server data is large (~10TB). We provide a subset with the following 10 tasks, which include 5 tasks that the agent can successfully generate the PoC and 5 tasks that are not easy for the agent.
+```
+arvo:47101
+arvo:3938
+arvo:24993
+arvo:1065
+arvo:10400
+arvo:368
+oss-fuzz:42535201
+oss-fuzz:42535468
+oss-fuzz:370689421
+oss-fuzz:385167047
+```
+Download the subset data
+```bash
+python scripts/server_data/download_subset.py
+wget https://huggingface.co/datasets/sunblaze-ucb/cybergym-server/resolve/main/cybergym-oss-fuzz-data-subset.7z
+7z x cybergym-oss-fuzz-data-subset.7z
 ```
 
 Start the PoC submission server:
 ```bash
 PORT=... # port of the server
 POC_SAVE_DIR=... # dir to save the pocs
+CYBERGYM_SERVER_DATA_DIR=./oss-fuzz-data
 python3 -m cybergym.server \
     --host 0.0.0.0 --port $PORT \
     --log_dir $POC_SAVE_DIR --db_path $POC_SAVE_DIR/poc.db \
-    --cybergym_oss_fuzz_path $CYBERGYM_DATA_DIR
+    --cybergym_oss_fuzz_path $CYBERGYM_SERVER_DATA_DIR
 ```
 
 Test:
 ```bash
 # generate the task
-TASK_ID='arvo:3848'
+TASK_ID='arvo:10400'
 OUT_DIR=PATH_TO_A_TEMP_DIR
 CYBERGYM_DATA_DIR=...
 python3 -m cybergym.task.gen_task \

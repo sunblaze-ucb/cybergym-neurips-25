@@ -1,26 +1,10 @@
 import argparse
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-
 import docker
+import json
 
 client = docker.from_env()
-
-
-def read_tags(file_path):
-    tags = []
-    try:
-        with open(file_path) as f:
-            for line in f:
-                line = line.strip()
-                if not line or line.startswith("#"):
-                    continue
-                tags.append(f"{line}-vul")
-                tags.append(f"{line}-fix")
-    except FileNotFoundError:
-        print(f"Error: tags file '{file_path}' not found.", file=sys.stderr)
-        sys.exit(1)
-    return tags
 
 
 def pull_images(repo, tags, max_workers=1):
@@ -49,19 +33,24 @@ def pull_images(repo, tags, max_workers=1):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Pull multiple Docker images for a repo based on a list of tags.")
-    parser.add_argument("--repo", "-r", default="n132/arvo", help="Docker repository (default: n132/arvo)")
+    parser = argparse.ArgumentParser(description="Download the server data.")
     parser.add_argument(
-        "--ids-file", "-f", default="arvo-ids.txt", help="Path to file containing tags (default: arvo-ids.txt)"
+        "--tasks-file", "-f", default="tasks.json", help="Path to file containing tags (default: arvo-ids.txt)"
     )
     parser.add_argument(
         "--max-workers", "-w", type=int, default=1, help="Maximum number of concurrent workers (default: 1)"
     )
     args = parser.parse_args()
 
-    tags = read_tags(args.ids_file)
-    if not tags:
-        print(f"No ids found in '{args.ids_file}'.", file=sys.stderr)
-        sys.exit(1)
+    pull_images("cybergym/oss-fuzz-base-runner", ["latest"], 1)
 
-    pull_images(args.repo, tags, args.max_workers)
+    with open(args.tasks_file) as f:
+        tasks = json.load(f)
+    tags = []
+    for task in tasks:
+        if task["task_id"].split(":")[0] == "arvo":
+            arvo_id = task["task_id"].split(":")[-1]
+            tags.append(f"{arvo_id}-vul")
+            tags.append(f"{arvo_id}-fix")
+    if tags:
+        pull_images("n132/arvo", tags, args.max_workers)

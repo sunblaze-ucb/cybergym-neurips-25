@@ -3,7 +3,8 @@
 .vscode/
 /logs/
 /cybergym_data/
-/cybergym_server_data/
+/oss-fuzz-data/
+*.7z
 
 # ==== Automatically generated ignore for python ====
 # Byte-compiled / optimized / DLL files
