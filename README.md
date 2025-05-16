@@ -31,6 +31,7 @@ bash scripts/server_data/download_chunks.sh
 ```
 
 2. Subset data
+
 The full server data is large (~10TB). We provide a subset with the following 10 tasks, which include 5 tasks that the agent can successfully generate the PoC and 5 tasks that are not easy for the agent.
 ```
 arvo:47101
