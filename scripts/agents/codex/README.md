@@ -12,7 +12,7 @@ bash install.sh
 OPENAI_API_KEY=sk-...
 CYBERGYN_DATA_DIR=...
 OUT_DIR=...
-MODEL=gpt-4.1-mini-2025-04-14
+MODEL=gpt-4.1-2025-04-14
 SERVER_IP=...
 SERVER_PORT=...
 TASK_ID=arvo:3848
@@ -22,7 +22,7 @@ python3 scripts/agents/codex/run.py \
     --tmp_dir $OUT_DIR/tmp \
     --task_id $TASK_ID \
     --data_dir $CYBERGYM_DATA_DIR \
-    --max_iter 5 \
+    --max_iter 100 \
     --server "http://$SERVER_IP:$SERVER_HOST" \
     --difficulty level1
 ```

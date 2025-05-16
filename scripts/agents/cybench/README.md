@@ -11,7 +11,7 @@ docker build -t cybergym/cybench:latest .
 OPENAI_API_KEY=sk-...
 CYBERGYN_DATA_DIR=...
 OUT_DIR=...
-MODEL=gpt-4.1-mini-2025-04-14
+MODEL=gpt-4.1-2025-04-14
 SERVER_IP=...
 SERVER_PORT=...
 TASK_ID=arvo:3848
@@ -24,6 +24,6 @@ python3 scripts/agents/cybench/run.py \
     --task_id $TASK_ID \
     --server "http://$SERVER_IP:$SERVER_PORT" \
     --timeout 1200 \
-    --max_iter 5 \
+    --max_iter 100 \
     --difficulty level1
 ```
